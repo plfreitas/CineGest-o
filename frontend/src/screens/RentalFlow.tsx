@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { CheckCircle, Calendar, CreditCard } from 'lucide-react-native';
 
-export default function RentalFlow() {
+export default function RentalFlow({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
       <View style={styles.content}>
-        <Text style={styles.header}>Nova Locação</Text>
         
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Filme Selecionado</Text>
@@ -14,25 +16,32 @@ export default function RentalFlow() {
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>CPF do Cliente</Text>
-          <TextInput 
-            style={styles.input} 
-            placeholder="000.000.000-00" 
-            placeholderTextColor="#666"
-            keyboardType="numeric"
-          />
+          <View style={styles.inputWrapper}>
+            <TextInput 
+              style={styles.input} 
+              placeholder="000.000.000-00" 
+              placeholderTextColor="#4b5563"
+              keyboardType="numeric"
+            />
+          </View>
         </View>
 
         <View style={styles.inputGroup}>
           <Text style={styles.label}>Data de Devolução</Text>
-          <TextInput 
-            style={styles.input} 
-            placeholder="DD/MM/AAAA" 
-            placeholderTextColor="#666"
-          />
+          <View style={styles.inputWrapper}>
+            <TextInput 
+              style={styles.input} 
+              placeholder="DD/MM/AAAA" 
+              placeholderTextColor="#4b5563"
+            />
+          </View>
         </View>
 
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Confirmar Aluguel</Text>
+          <LinearGradient colors={['#3b82f6', '#2563eb']} style={styles.buttonGradient}>
+            <CheckCircle color="#FFF" size={20} />
+            <Text style={styles.buttonText}>Confirmar Aluguel</Text>
+          </LinearGradient>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -40,36 +49,46 @@ export default function RentalFlow() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#121212' },
+  container: { flex: 1, backgroundColor: '#0F0F0F' },
   content: { padding: 20 },
-  header: { fontSize: 24, fontWeight: 'bold', color: '#FFF', marginBottom: 30 },
   card: { 
-    backgroundColor: '#333', 
-    padding: 20, 
-    borderRadius: 10, 
+    backgroundColor: '#1E3A8A', 
+    padding: 24, 
+    borderRadius: 20, 
     marginBottom: 30,
-    borderLeftWidth: 5,
-    borderLeftColor: '#4CAF50'
+    borderLeftWidth: 8,
+    borderLeftColor: '#4ade80',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
   },
-  cardTitle: { color: '#AAA', fontSize: 14, marginBottom: 5 },
-  movieName: { color: '#FFF', fontSize: 20, fontWeight: 'bold' },
-  inputGroup: { marginBottom: 20 },
-  label: { color: '#AAA', marginBottom: 8, fontSize: 16 },
-  input: { 
-    backgroundColor: '#1E1E1E', 
-    color: '#FFF', 
-    borderRadius: 8, 
-    padding: 15, 
-    fontSize: 16,
+  cardTitle: { color: '#94a3b8', fontSize: 12, fontWeight: 'bold', textTransform: 'uppercase', marginBottom: 8 },
+  movieName: { color: '#FFF', fontSize: 22, fontWeight: 'bold' },
+  inputGroup: { marginBottom: 25 },
+  label: { color: '#94a3b8', marginBottom: 10, fontSize: 14, fontWeight: '600' },
+  inputWrapper: {
+    backgroundColor: '#1A1A1A', 
+    borderRadius: 15, 
     borderWidth: 1,
-    borderColor: '#444'
+    borderColor: '#262626'
+  },
+  input: { 
+    color: '#F8FAFC', 
+    padding: 16, 
+    fontSize: 16,
   },
   button: { 
-    backgroundColor: '#2196F3', 
-    padding: 18, 
-    borderRadius: 8, 
+    marginTop: 20,
+    borderRadius: 15,
+    overflow: 'hidden'
+  },
+  buttonGradient: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 20
+    justifyContent: 'center',
+    paddingVertical: 18,
+    gap: 10
   },
   buttonText: { color: '#FFF', fontSize: 18, fontWeight: 'bold' }
 });
