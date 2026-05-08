@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import movieRoutes from './routes/movies';
 
 dotenv.config();
 
@@ -16,6 +17,8 @@ const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/cinegesta
 mongoose.connect(mongoURI)
   .then(() => console.log('✅ Conectado ao MongoDB'))
   .catch((err) => console.error('❌ Erro ao conectar ao MongoDB:', err));
+
+app.use('/api/movies', movieRoutes);
 
 app.get('/', (req, res) => {
   res.send('CineGestão API Running...');
