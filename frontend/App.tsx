@@ -5,6 +5,7 @@ import Dashboard from './src/screens/Dashboard';
 import AddMovie from './src/screens/AddMovie';
 import RentalFlow from './src/screens/RentalFlow';
 import MovieList from './src/screens/MovieList';
+import MovieDetails from './src/screens/MovieDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +13,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
+        id="main"
         initialRouteName="Dashboard"
         screenOptions={{
           headerStyle: {
@@ -25,6 +27,11 @@ export default function App() {
         }}
       >
         <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen 
+          name="MovieDetails" 
+          component={MovieDetails} 
+          options={{ headerShown: false }}
+        />
         <Stack.Screen 
           name="AddMovie" 
           component={AddMovie} 
