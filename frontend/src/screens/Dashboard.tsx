@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, SafeAreaView, ScrollView, TouchableOpacity, StatusBar, TextInput, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, StatusBar, TextInput, ActivityIndicator } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Film, Users, ShoppingCart, PlusCircle, Search, Star } from 'lucide-react-native';
 import { moviesApi } from '../services/api';

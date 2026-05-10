@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "CineGestão",
+    "owner": "burucabiraca",
     "slug": "cinegestao",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +10,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.burucabiraca.cinegestao"
+    },
+    "android": {
+      "package": "com.burucabiraca.cinegestao",
+      "adaptiveIcon": {
+        "backgroundColor": "#1e1b4b"
+      }
     },
     "web": {},
     "extra": {
@@ -17,12 +25,9 @@
         "projectId": "5887367d-af9c-407b-a699-6982e38df8c2"
       }
     },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
     "updates": {
       "url": "https://u.expo.dev/5887367d-af9c-407b-a699-6982e38df8c2"
     },
-    "android": {}
+    "runtimeVersion": "1.0.0"
   }
 }
