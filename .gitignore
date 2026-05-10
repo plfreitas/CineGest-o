@@ -53,4 +53,8 @@ CineGestao/
 *.pdf
 *.docx
 *.doc
-CineGestao-aiox.jpeg
+*.jpeg
+*.jpg
+*.png
+.env.example
+"Projeto para o Salustiano partes 1,2 e 3/"
