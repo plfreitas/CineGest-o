@@ -45,3 +45,12 @@ frontend/node_modules/
 frontend/.expo/
 backend/node_modules/
 docs/stories/
+
+# Backups e Arquivos Pessoais (não devem ser públicos)
+*.zip
+frontend-backup/
+CineGestao/
+*.pdf
+*.docx
+*.doc
+CineGestao-aiox.jpeg
