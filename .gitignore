@@ -28,11 +28,11 @@ Thumbs.db
 .claude/settings.local.json
 .aiox/install-log.txt
 
-# CineGestão Squad & Local Setup
-.antigravity/
+# CineGestão Squad & Local Setup (Sincronizado)
+#.antigravity/
+#.agent/
 .aiox-core/
 .aiox/
-.agent/
 .claude/
 .codex/
 .cursor/
