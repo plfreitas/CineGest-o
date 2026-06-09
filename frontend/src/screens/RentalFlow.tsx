@@ -1,9 +1,47 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Alert, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { CheckCircle, Calendar, CreditCard } from 'lucide-react-native';
+import { CheckCircle } from 'lucide-react-native';
+import { moviesApi } from '../services/api';
 
-export default function RentalFlow({ navigation }: any) {
+export default function RentalFlow({ route, navigation }: any) {
+  const { movie } = route.params || { movie: { title: 'Nenhum filme selecionado', _id: '', id: '' } };
+  const [cpf, setCpf] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleConfirm = async () => {
+    if (!cpf.trim() || !dueDate.trim()) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    // Validação simples de formato de CPF (mínimo 11 dígitos ou caracteres normativos)
+    const cleanCpf = cpf.replace(/\D/g, '');
+    if (cleanCpf.length !== 11) {
+      Alert.alert('Erro', 'O CPF informado deve conter 11 dígitos.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const movieId = movie._id || movie.id;
+      if (!movieId) {
+        Alert.alert('Erro', 'Filme inválido.');
+        return;
+      }
+      await moviesApi.updateAvailability(movieId, false);
+      Alert.alert('Sucesso', `Aluguel de "${movie.title}" registrado com sucesso!`, [
+        { text: 'OK', onPress: () => navigation.navigate('Dashboard') }
+      ]);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Falha ao registrar aluguel. Verifique a conexão com o servidor.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -11,7 +49,7 @@ export default function RentalFlow({ navigation }: any) {
         
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Filme Selecionado</Text>
-          <Text style={styles.movieName}>O Poderoso Chefão</Text>
+          <Text style={styles.movieName}>{movie.title}</Text>
         </View>
 
         <View style={styles.inputGroup}>
@@ -22,6 +60,8 @@ export default function RentalFlow({ navigation }: any) {
               placeholder="000.000.000-00" 
               placeholderTextColor="#4b5563"
               keyboardType="numeric"
+              value={cpf}
+              onChangeText={setCpf}
             />
           </View>
         </View>
@@ -33,14 +73,22 @@ export default function RentalFlow({ navigation }: any) {
               style={styles.input} 
               placeholder="DD/MM/AAAA" 
               placeholderTextColor="#4b5563"
+              value={dueDate}
+              onChangeText={setDueDate}
             />
           </View>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleConfirm} disabled={loading}>
           <LinearGradient colors={['#3b82f6', '#2563eb']} style={styles.buttonGradient}>
-            <CheckCircle color="#FFF" size={20} />
-            <Text style={styles.buttonText}>Confirmar Aluguel</Text>
+            {loading ? (
+              <ActivityIndicator color="#FFF" size="small" />
+            ) : (
+              <>
+                <CheckCircle color="#FFF" size={20} />
+                <Text style={styles.buttonText}>Confirmar Aluguel</Text>
+              </>
+            )}
           </LinearGradient>
         </TouchableOpacity>
       </View>

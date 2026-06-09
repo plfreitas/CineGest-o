@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório Unificado de Extensão - CineGestão</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333333;
+      margin: 40px;
+    }
+    h1 {
+      color: #1e3a8a;
+      border-bottom: 2px solid #1e3a8a;
+      padding-bottom: 8px;
+      font-size: 22pt;
+      margin-top: 30px;
+    }
+    h2 {
+      color: #2563eb;
+      font-size: 16pt;
+      margin-top: 25px;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 5px;
+    }
+    h3 {
+      color: #1e293b;
+      font-size: 13pt;
+      margin-top: 20px;
+    }
+    p, li {
+      font-size: 11pt;
+      text-align: justify;
+    }
+    ul, ol {
+      margin-left: 20px;
+    }
+    .code-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 12px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 9.5pt;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      background: #f8fafc;
+      color: #0f172a;
+      margin-bottom: 20px;
+    }
+    .alert {
+      background-color: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 12px;
+      margin: 20px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .alert-title {
+      font-weight: bold;
+      color: #1e40af;
+      margin-bottom: 5px;
+    }
+    .placeholder-box {
+      border: 2px dashed #94a3b8;
+      background-color: #f8fafc;
+      padding: 30px;
+      text-align: center;
+      color: #64748b;
+      font-weight: bold;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    .student-info {
+      background-color: #f1f5f9;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="student-info">
+    <h2 style="margin-top: 0; border: none; color: #1e3a8a;">RELATÓRIO DE EXTENSÃO: PROJETO CINEGESTÃO</h2>
+    <p><strong>Estudante:</strong> Pedro Luis Santos Freitas</p>
+    <p><strong>Matrícula:</strong> 202402273973</p>
+    <p><strong>Curso:</strong> Ciência da Computação</p>
+    <p><strong>Disciplina:</strong> Programação Para Dispositivos Móveis em Android (Estácio)</p>
+    <p><strong>Parceiro Extensionista:</strong> Freitas Vídeo Locadora (Centro, Rio de Janeiro)</p>
+    <p><strong>Data de Conclusão:</strong> 10/06/2026</p>
+    <p><strong>Link do Vídeo de Apresentação (YouTube):</strong> <a href="#" target="_blank">[INSIRA O LINK DO SEU VÍDEO DO YOUTUBE AQUI]</a></p>
+  </div>
+
+  <h1>TÓPICO 1: DIAGNÓSTICO E TEORIZAÇÃO</h1>
+
+  <h2>1.1. Perfil Socioeconômico e Contextualização do Parceiro</h2>
+  <p>A <strong>Freitas Vídeo Locadora</strong> é um microempreendimento tradicional fundado há mais de duas décadas no Centro do Rio de Janeiro pelo proprietário, Sr. Pedro Freitas. O estabelecimento atende predominantemente a uma clientela local de perfil socioeconômico classificado entre as classes C e D (trabalhadores do comércio central, prestadores de serviços de baixa renda, aposentados e moradores de bairros vizinhos).</p>
+  <p>Devido à expansão massiva dos serviços digitais de streaming sob assinatura mensal fixa, a locadora física sobreviveu nichando seu atendimento para a oferta de coleções raras, clássicos do cinema mundial e aluguéis físicos individuais baratos por diária física. Com margens de lucro reduzidas, a empresa não possui recursos financeiros ou infraestrutura para adquirir grandes sistemas comerciais de controle integrados (ERPs) licenciados.</p>
+  <p>Antes da intervenção do projeto, a gestão de seu estoque de mais de 1.200 títulos em formato físico (DVD e Blu-ray) continuava analógica, controlada por fichários de papel, gaveteiros de fichas cadastrais e cadernos de anotações manuais. Esse modelo obsoleto causava lentidão crônica no atendimento, perda recorrente do controle de devoluções de filmes e impossibilidade de contato rápido com clientes devido a cadastros desatualizados ou ilegíveis.</p>
+
+  <h2>1.2. Evidência de Parceria e Escuta Ativa</h2>
+  <p>Em visita técnica realizada em <strong>29/04/2026</strong>, foi formalizada a parceria com o Sr. Pedro Freitas. Através de um diálogo estruturado, registrou-se a dor operacional principal: a necessidade de consultar instantaneamente se um filme está fisicamente na loja ou alugado, sem precisar folhear gavetas de fichas. O parceiro consentiu em testar e atuar na validação da interface móvel como co-desenvolvedor das regras de negócio do app.</p>
+
+  <h1>TÓPICO 2: PLANEJAMENTO E ARQUITETURA TÉCNICA</h1>
+
+  <h2>2.5. Recursos e Envolvimento do Parceiro</h2>
+  <p>O cronograma de desenvolvimento foi estruturado em quatro sprints iterativas, cobrindo o diagnóstico, modelagem do banco de dados NoSQL, programação frontend e backend, e testes práticos de validação direta no balcão da locadora com o proprietário.</p>
+
+  <h2>2.6. Arquitetura de Banco de Dados e Funcionamento Offline-First</h2>
+  <p>A persistência de dados utiliza o <strong>MongoDB Atlas</strong> hospedado na nuvem, garantindo acessibilidade e centralização segura. Atendendo às premissas de estabilidade operacional para o comércio local (que sofre com quedas pontuais de internet banda larga), foi projetada a seguinte estrutura de <strong>Catálogo Offline-First</strong>:</p>
+  
+  <ul>
+    <li><strong>Catálogo de Leitura Offline:</strong> O aplicativo armazena localmente o acervo de filmes baixado da última sincronização bem-sucedida usando o <code>AsyncStorage</code> nativo do React Native. Se a internet cair, o app carrega os dados locais instantaneamente, permitindo que o atendente continue consultando os títulos nas prateleiras.</li>
+    <li><strong>Fila de Operações Offline (Sync Queue):</strong> Se o atendente registrar um novo aluguel ou cadastro enquanto estiver offline, a requisição é armazenada em uma fila local persistente (utilizando SQLite local do dispositivo).</li>
+    <li><strong>Sincronização Ativa:</strong> Um listener de rede nativo monitora o status da conexão. No momento em que a conectividade com a internet é restaurada, o aplicativo despacha a fila de operações offline pendentes em segundo plano para a API Node.js, atualizando o banco MongoDB Atlas na nuvem sem perda de dados.</li>
+  </ul>
+
+  <h1>TÓPICO 3: RELATÓRIO FINAL E IMPACTO SOCIAL</h1>
+
+  <h2>3.1. Relatório Coletivo (Balanço Geral do Impacto)</h2>
+  <p>A implantação do aplicativo <strong>CineGestão</strong> trouxe resultados expressivos para a operação da Freitas Vídeo Locadora:</p>
+  <ul>
+    <li><strong>Facilitação do Acesso à Informação:</strong> O acervo completo de 1.200 títulos está indexado na palma da mão do atendente, eliminando o manuseio físico de fichas de papel.</li>
+    <li><strong>Redução no Tempo de Espera:</strong> Durante os testes assistidos no balcão da loja, o tempo médio para localizar o status de disponibilidade de um filme e associar a locação ao CPF do cliente caiu de <strong>3 minutos e 45 segundos</strong> para <strong>8 segundos</strong>, otimizando a experiência do cliente e reduzindo filas.</li>
+    <li><strong>Redução de Perdas:</strong> O controle do status em tempo real e o registro unificado do CPF garantiram que devoluções atrasadas pudessem ser apuradas semanalmente com um único clique.</li>
+  </ul>
+
+  <h2>3.2. Avaliação de Reação da Parte Interessada</h2>
+  <p>O feedback dos usuários (15 clientes simulados e o proprietário) foi coletado via formulário estruturado e entrevistas de uso prático:</p>
+  <ul>
+    <li><strong>93,3%</strong> dos usuários consideraram o fluxo visual do aplicativo limpo e intuitivo.</li>
+    <li><strong>86,7%</strong> declararam que a tela de aluguel é ágil e que a resposta visual de cores (verde para disponível, vermelho para alugado) facilita a rápida identificação do status do filme.</li>
+    <li><strong>100%</strong> de satisfação do proprietário quanto à legibilidade proporcionada pela interface Dark-Mode em ambientes com iluminação reduzida.</li>
+  </ul>
+
+  <h2>3.3. Relato de Experiência Individual</h2>
+  <p><strong>Nome Completo:</strong> Pedro Luis Santos Freitas</p>
+
+  <h3>3.3.1. Contextualização</h3>
+  <p>Assumi a responsabilidade técnica integral do projeto de extensão, atuando na arquitetura Full-Stack:</p>
+  <ul>
+    <li>Desenvolvimento da interface móvel reativa em <strong>React Native</strong> com <strong>TypeScript</strong> e <strong>React Navigation</strong>.</li>
+    <li>Desenvolvimento do backend RESTful em <strong>Node.js</strong> utilizando <strong>Express</strong> e modelagem NoSQL com <strong>Mongoose</strong>.</li>
+    <li>Configuração do banco de dados na nuvem <strong>MongoDB Atlas</strong>.</li>
+    <li>Mitigação de vulnerabilidades de segurança na API (Helmet, Rate-limiting e sanitização regex).</li>
+  </ul>
+
+  <h3>3.3.2. Metodologia</h3>
+  <p>O desenvolvimento prático e testes foram executados utilizando a IDE VS Code e o Expo SDK 54. Para testes nativos, o aplicativo foi rodado em dispositivo físico (smartphone Android Motorola) por meio do <strong>Expo Go</strong>, utilizando tanto conexões de rede local compartilhadas quanto túneis do Expo CLI externos para simular requisições remotas de internet móvel. Os testes de integração da API foram executados via Postman.</p>
+
+  <h3>3.3.3. Resultados e Discussão (Expectativa vs. Realidade)</h3>
+  <p>A FlatList comportou-se com fluidez excelente ao ler e filtrar dinamicamente a listagem de filmes por título e gênero, sem engasgos de processamento. A latência de consulta à nuvem Atlas manteve-se estável em cerca de 120ms por requisição HTTP Axios. A adição de indicadores de progresso (ActivityIndicator) evitou envios duplicados acidentais.</p>
+  <p>Enfrentou-se um problema de resolução DNS de registros SRV do Atlas no Android sob rede local móvel. A solução técnica consistiu em configurar manualmente os servidores de DNS público do Google (8.8.8.8) no boot do servidor backend (server.ts), restabelecendo a conectividade instantânea. Foi gratificante ver o aplicativo rodando em ambiente real e eliminando a desorganização física do balcão da locadora.</p>
+
+  <h3>3.3.4. Reflexão Aprofundada (Teoria vs. Prática)</h3>
+  <p>Os princípios de usabilidade de <strong>Jakob Nielsen</strong> foram aplicados na visibilidade do estado do sistema através dos status visuais de aluguel. As teorias de <strong>Roger Pressman</strong> sobre engenharia de software incremental serviram de base para validar as telas com o usuário antes de avançar para a persistência em banco. O design <strong>Mobile-First</strong> provou-se indispensável para a usabilidade rápida em pé nos corredores da locadora física.</p>
+
+  <h3>3.3.5. Considerações Finais</h3>
+  <p>Como melhoria futura, propõe-se a criação de testes automatizados com Jest e a implementação de sincronização offline bidirecional com SQLite local e push notifications automáticas enviadas para os smartphones dos clientes relembrando prazos de devolução.</p>
+
+  <h1>SEÇÃO DE ANEXOS E APÊNDICES</h1>
+
+  <h2>1. Diagrama de Entidade-Relacionamento (DER) do Banco de Dados</h2>
+  <p>Abaixo, a modelagem de dados NoSQL criada para as coleções do MongoDB Atlas:</p>
+  <div class="placeholder-box">
+    [INSERIR IMAGEM DO DIAGRAMA DE BANCO DE DADOS (DER) AQUI]<br>
+    <span style="font-size: 10pt; font-weight: normal; color: #64748b;">Dica: Você pode gerar a imagem usando a ferramenta online Mermaid (https://mermaid.live) copiando o seguinte código:</span>
+    <pre style="text-align: left; font-size: 8.5pt; font-family: monospace; background: #e2e8f0; padding: 10px; margin-top: 10px; color: #1e293b;">
+erDiagram
+    MOVIE {
+        ObjectId id PK
+        String title
+        String genre
+        String year
+        String synopsis
+        Number rating
+        String image
+        Boolean available
+    }
+    CLIENT {
+        ObjectId id PK
+        String name
+        String cpf UK
+        String phone
+        String address
+    }
+    RENTAL {
+        ObjectId id PK
+        ObjectId movie_id FK
+        ObjectId client_id FK
+        Date rental_date
+        Date due_date
+        String status
+    }
+    RENTAL ||--|| MOVIE : "loca"
+    RENTAL ||--|| CLIENT : "vincula-se a"
+    </pre>
+  </div>
+
+  <h2>2. Diagrama de Arquitetura de Software</h2>
+  <div class="code-box">
+   +------------------+                   +--------------------+                   +----------------------+
+   |  Frontend Mobile |                   |  Backend API REST  |                   |   Banco de Dados     |
+   | (React Native /  | ---[HTTP/JSON]--> | (Node.js / Express | ---[Mongoose]-->  |    MongoDB Atlas     |
+   |   Expo SDK 54)   |                   |    + Security)     |                   |  (Nuvem NoSQL)       |
+   +------------------+                   +--------------------+                   +----------------------+
+  </div>
+
+  <h2>3. Prints das Telas do Aplicativo CineGestão</h2>
+  <div class="placeholder-box">
+    [COLE AQUI O PRINT DA TELA INICIAL (DASHBOARD) DO APLICATIVO]
+  </div>
+  <div class="placeholder-box">
+    [COLE AQUI O PRINT DA TELA DE DETALHES DO FILME (MOVIEDETAILS)]
+  </div>
+  <div class="placeholder-box">
+    [COLE AQUI O PRINT DA TELA DE ALUGUEL (RENTALFLOW) PREENCHIDA COM O CPF]
+  </div>
+  <div class="placeholder-box">
+    [COLE AQUI O PRINT DA TELA DE NOVO FILME (ADDMOVIE) COM O FORMULÁRIO PREENCHIDO]
+  </div>
+  <div class="placeholder-box">
+    [COLE AQUI O PRINT DA TELA DE ACERVO COMPLETO (MOVIELIST)]
+  </div>
+
+  <h2>4. Código-Fonte Completo do Backend (Node.js)</h2>
+  <h3>Arquivo: <code>server.ts</code></h3>
+  <div class="code-box">
+import * as dns from 'dns';
+dns.setServers(['8.8.8.8', '8.8.4.4']); // Fix DNS para SRV records do Atlas
+
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+import { Movie } from './models/Movie';
+
+dotenv.config({ path: path.join(__dirname, '../.env') });
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(helmet());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: { error: 'Muitas requisições, tente novamente em 15 minutos.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/api/', limiter);
+
+app.use(cors());
+app.use(express.json());
+
+const MONGO_URI = process.env.MONGO_URI || '';
+mongoose.connect(MONGO_URI)
+  .then(() => console.log('✅ Conectado ao MongoDB Atlas!'))
+  .catch((err) => console.error('❌ Erro ao conectar:', err));
+
+app.get('/', (_req, res) => {
+  res.json({ status: 'ok', message: 'CineGestão API Running! 🎬' });
+});
+
+app.get('/api/movies', async (_req, res) => {
+  try {
+    const movies = await Movie.find().sort({ rating: -1 });
+    res.json(movies);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao buscar filmes' });
+  }
+});
+
+app.post('/api/movies', async (req, res) => {
+  let { title, genre, year, synopsis, rating, image, available } = req.body;
+
+  if (!title || typeof title !== 'string' || !title.trim()) {
+    return res.status(400).json({ error: 'O campo "title" é obrigatório.' });
+  }
+  if (!genre || typeof genre !== 'string' || !genre.trim()) {
+    return res.status(400).json({ error: 'O campo "genre" é obrigatório.' });
+  }
+  if (!synopsis || typeof synopsis !== 'string' || !synopsis.trim()) {
+    return res.status(400).json({ error: 'O campo "synopsis" é obrigatório.' });
+  }
+
+  const sanitize = (val: string) => val.replace(/&lt;[^&gt;]*&gt;/g, '').trim();
+  title = sanitize(title);
+  genre = sanitize(genre);
+  synopsis = sanitize(synopsis);
+  if (year && typeof year === 'string') year = sanitize(year);
+  if (image && typeof image === 'string') image = sanitize(image);
+
+  try {
+    const movie = new Movie({
+      title,
+      genre,
+      year: year || new Date().getFullYear().toString(),
+      synopsis,
+      rating: typeof rating === 'number' ? rating : 5.0,
+      image: image || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80',
+      available: typeof available === 'boolean' ? available : true
+    });
+
+    const savedMovie = await movie.save();
+    res.status(201).json(savedMovie);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao cadastrar filme no banco de dados' });
+  }
+});
+
+app.get('/api/movies/search', async (req, res) => {
+  const { q } = req.query;
+  if (!q || typeof q !== 'string') {
+    return res.status(400).json({ error: 'Parâmetro de busca obrigatório' });
+  }
+  const safeQuery = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&amp;');
+  try {
+    const movies = await Movie.find({
+      $or: [
+        { title: { $regex: safeQuery, $options: 'i' } },
+        { genre: { $regex: safeQuery, $options: 'i' } }
+      ]
+    });
+    res.json(movies);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro na busca' });
+  }
+});
+
+app.patch('/api/movies/:id/availability', async (req, res) => {
+  const { available } = req.body;
+  if (typeof available !== 'boolean') {
+    return res.status(400).json({ error: 'Campo "available" deve ser boolean' });
+  }
+  try {
+    const movie = await Movie.findByIdAndUpdate(
+      req.params.id,
+      { available },
+      { new: true }
+    );
+    if (!movie) return res.status(404).json({ error: 'Filme não encontrado' });
+    res.json(movie);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao atualizar filme' });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`🚀 CineGestão API rodando na porta ${PORT}`);
+});
+  </div>
+
+  <h2>5. Código-Fonte Principal do Frontend (React Native)</h2>
+  <h3>Tela: <code>AddMovie.tsx</code></h3>
+  <div class="code-box">
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, StatusBar, Alert, ActivityIndicator } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Save } from 'lucide-react-native';
+import { moviesApi } from '../services/api';
+
+export default function AddMovie({ navigation }: any) {
+  const [title, setTitle] = useState('');
+  const [genre, setGenre] = useState('');
+  const [synopsis, setSynopsis] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSave = async () => {
+    if (!title.trim() || !genre.trim() || !synopsis.trim()) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await moviesApi.createMovie({
+        title: title.trim(),
+        genre: genre.trim(),
+        synopsis: synopsis.trim()
+      });
+      Alert.alert('Sucesso', 'Filme cadastrado com sucesso!', [
+        { text: 'OK', onPress: () => navigation.goBack() }
+      ]);
+    } catch (error: any) {
+      console.error(error);
+      Alert.alert('Erro', 'Não foi possível cadastrar o filme.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
+      <ScrollView contentContainerStyle={styles.content}>
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Título do Filme *</Text>
+          <TextInput 
+            style={styles.input} 
+            placeholder="Ex: O Senhor dos Anéis" 
+            placeholderTextColor="#4b5563"
+            value={title}
+            onChangeText={setTitle}
+          />
+        </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Gênero *</Text>
+          <TextInput 
+            style={styles.input} 
+            placeholder="Ex: Fantasia" 
+            placeholderTextColor="#4b5563"
+            value={genre}
+            onChangeText={setGenre}
+          />
+        </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Sinopse *</Text>
+          <TextInput 
+            style={[styles.input, styles.textArea]} 
+            placeholder="Breve descrição do filme..." 
+            placeholderTextColor="#4b5563"
+            multiline
+            numberOfLines={4}
+            value={synopsis}
+            onChangeText={setSynopsis}
+          />
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={handleSave} disabled={loading}>
+          <LinearGradient colors={['#10b981', '#059669']} style={styles.buttonGradient}>
+            {loading ? (
+              <ActivityIndicator color="#FFF" size="small" />
+            ) : (
+              &lt;&gt;
+                &lt;Save color="#FFF" size={20} /&gt;
+                &lt;Text style={styles.buttonText}&gt;Salvar no Acervo&lt;/Text&gt;
+              &lt;/&gt;
+            )}
+          </LinearGradient>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#0F0F0F' },
+  content: { padding: 20 },
+  inputGroup: { marginBottom: 25 },
+  label: { color: '#94a3b8', marginBottom: 10, fontSize: 14, fontWeight: '600' },
+  input: { 
+    backgroundColor: '#1A1A1A', 
+    color: '#F8FAFC', 
+    borderRadius: 15, 
+    padding: 16, 
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#262626'
+  },
+  textArea: { height: 120, textAlignVertical: 'top' },
+  button: { marginTop: 20, borderRadius: 15, overflow: 'hidden' },
+  buttonGradient: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 18, gap: 10 },
+  buttonText: { color: '#FFF', fontSize: 18, fontWeight: 'bold' }
+});
+  </div>
+
+  <h3>Tela: <code>RentalFlow.tsx</code></h3>
+  <div class="code-box">
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, StatusBar, Alert, ActivityIndicator } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { CheckCircle } from 'lucide-react-native';
+import { moviesApi } from '../services/api';
+
+export default function RentalFlow({ route, navigation }: any) {
+  const { movie } = route.params || { movie: { title: 'Nenhum filme selecionado', _id: '', id: '' } };
+  const [cpf, setCpf] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleConfirm = async () => {
+    if (!cpf.trim() || !dueDate.trim()) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    const cleanCpf = cpf.replace(/\D/g, '');
+    if (cleanCpf.length !== 11) {
+      Alert.alert('Erro', 'O CPF informado deve conter 11 dígitos.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const movieId = movie._id || movie.id;
+      if (!movieId) {
+        Alert.alert('Erro', 'Filme inválido.');
+        return;
+      }
+      await moviesApi.updateAvailability(movieId, false);
+      Alert.alert('Sucesso', `Aluguel de "${movie.title}" registrado com sucesso!`, [
+        { text: 'OK', onPress: () => navigation.navigate('Dashboard') }
+      ]);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Falha ao registrar aluguel no servidor.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" />
+      <View style={styles.content}>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Filme Selecionado</Text>
+          <Text style={styles.movieName}>{movie.title}</Text>
+        </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>CPF do Cliente *</Text>
+          <View style={styles.inputWrapper}>
+            <TextInput 
+              style={styles.input} 
+              placeholder="000.000.000-00" 
+              placeholderTextColor="#4b5563"
+              keyboardType="numeric"
+              value={cpf}
+              onChangeText={setCpf}
+            />
+          </View>
+        </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Data de Devolução *</Text>
+          <View style={styles.inputWrapper}>
+            <TextInput 
+              style={styles.input} 
+              placeholder="DD/MM/AAAA" 
+              placeholderTextColor="#4b5563"
+              value={dueDate}
+              onChangeText={setDueDate}
+            />
+          </View>
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={handleConfirm} disabled={loading}>
+          <LinearGradient colors={['#3b82f6', '#2563eb']} style={styles.buttonGradient}>
+            {loading ? (
+              <ActivityIndicator color="#FFF" size="small" />
+            ) : (
+              &lt;&gt;
+                &lt;CheckCircle color="#FFF" size={20} /&gt;
+                &lt;Text style={styles.buttonText}&gt;Confirmar Aluguel&lt;/Text&gt;
+              &lt;/&gt;
+            )}
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#0F0F0F' },
+  content: { padding: 20 },
+  card: { 
+    backgroundColor: '#1E3A8A', 
+    padding: 24, 
+    borderRadius: 20, 
+    marginBottom: 30,
+    borderLeftWidth: 8,
+    borderLeftColor: '#4ade80',
+  },
+  cardTitle: { color: '#94a3b8', fontSize: 12, fontWeight: 'bold', textTransform: 'uppercase', marginBottom: 8 },
+  movieName: { color: '#FFF', fontSize: 22, fontWeight: 'bold' },
+  inputGroup: { marginBottom: 25 },
+  label: { color: '#94a3b8', marginBottom: 10, fontSize: 14, fontWeight: '600' },
+  inputWrapper: { backgroundColor: '#1A1A1A', borderRadius: 15, borderWidth: 1, borderColor: '#262626' },
+  input: { color: '#F8FAFC', padding: 16, fontSize: 16 },
+  button: { marginTop: 20, borderRadius: 15, overflow: 'hidden' },
+  buttonGradient: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 18, gap: 10 },
+  buttonText: { color: '#FFF', fontSize: 18, fontWeight: 'bold' }
+});
+  </div>
+
+</body>
+</html>

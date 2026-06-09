@@ -53,6 +53,47 @@ app.get('/api/movies', async (_req, res) => {
   }
 });
 
+// POST criar novo filme
+app.post('/api/movies', async (req, res) => {
+  let { title, genre, year, synopsis, rating, image, available } = req.body;
+
+  // Validação básica dos campos obrigatórios
+  if (!title || typeof title !== 'string' || !title.trim()) {
+    return res.status(400).json({ error: 'O campo "title" é obrigatório e deve ser uma string.' });
+  }
+  if (!genre || typeof genre !== 'string' || !genre.trim()) {
+    return res.status(400).json({ error: 'O campo "genre" é obrigatório e deve ser uma string.' });
+  }
+  if (!synopsis || typeof synopsis !== 'string' || !synopsis.trim()) {
+    return res.status(400).json({ error: 'O campo "synopsis" é obrigatório e deve ser uma string.' });
+  }
+
+  // Sanitização básica contra HTML/XSS nos campos de texto
+  const sanitize = (val: string) => val.replace(/<[^>]*>/g, '').trim();
+  title = sanitize(title);
+  genre = sanitize(genre);
+  synopsis = sanitize(synopsis);
+  if (year && typeof year === 'string') year = sanitize(year);
+  if (image && typeof image === 'string') image = sanitize(image);
+
+  try {
+    const movie = new Movie({
+      title,
+      genre,
+      year: year || new Date().getFullYear().toString(),
+      synopsis,
+      rating: typeof rating === 'number' ? rating : 5.0,
+      image: image || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80',
+      available: typeof available === 'boolean' ? available : true
+    });
+
+    const savedMovie = await movie.save();
+    res.status(201).json(savedMovie);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao cadastrar filme no banco de dados' });
+  }
+});
+
 // GET busca por título/gênero
 app.get('/api/movies/search', async (req, res) => {
   const { q } = req.query;

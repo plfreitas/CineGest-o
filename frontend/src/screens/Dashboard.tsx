@@ -14,7 +14,11 @@ export default function Dashboard({ navigation }: any) {
 
   useEffect(() => {
     loadMovies();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      loadMovies();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const loadMovies = async () => {
     try {

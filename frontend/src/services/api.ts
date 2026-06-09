@@ -14,4 +14,6 @@ export const moviesApi = {
   search: (q: string) => api.get(`/api/movies/search?q=${encodeURIComponent(q)}`),
   updateAvailability: (id: string, available: boolean) => 
     api.patch(`/api/movies/${id}/availability`, { available }),
+  createMovie: (movieData: { title: string; genre: string; synopsis: string; year?: string; rating?: number; image?: string }) =>
+    api.post('/api/movies', movieData),
 };

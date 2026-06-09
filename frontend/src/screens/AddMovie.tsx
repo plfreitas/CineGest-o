@@ -1,11 +1,38 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, SafeAreaView, StatusBar, Alert, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronLeft, Save } from 'lucide-react-native';
+import { Save } from 'lucide-react-native';
+import { moviesApi } from '../services/api';
 
 export default function AddMovie({ navigation }: any) {
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
+  const [synopsis, setSynopsis] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSave = async () => {
+    if (!title.trim() || !genre.trim() || !synopsis.trim()) {
+      Alert.alert('Erro', 'Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await moviesApi.createMovie({
+        title: title.trim(),
+        genre: genre.trim(),
+        synopsis: synopsis.trim()
+      });
+      Alert.alert('Sucesso', 'Filme cadastrado com sucesso!', [
+        { text: 'OK', onPress: () => navigation.goBack() }
+      ]);
+    } catch (error: any) {
+      console.error(error);
+      Alert.alert('Erro', 'Não foi possível cadastrar o filme. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,13 +69,21 @@ export default function AddMovie({ navigation }: any) {
             placeholderTextColor="#4b5563"
             multiline
             numberOfLines={4}
+            value={synopsis}
+            onChangeText={setSynopsis}
           />
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handleSave} disabled={loading}>
           <LinearGradient colors={['#10b981', '#059669']} style={styles.buttonGradient}>
-            <Save color="#FFF" size={20} />
-            <Text style={styles.buttonText}>Salvar no Acervo</Text>
+            {loading ? (
+              <ActivityIndicator color="#FFF" size="small" />
+            ) : (
+              <>
+                <Save color="#FFF" size={20} />
+                <Text style={styles.buttonText}>Salvar no Acervo</Text>
+              </>
+            )}
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>
