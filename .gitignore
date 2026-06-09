@@ -58,3 +58,11 @@ CineGestao/
 *.png
 .env.example
 "Projeto para o Salustiano partes 1,2 e 3/"
+
+# Pasta de entrega e apresentação final (arquivos locais do usuário)
+"docs/Arquivos para apresentação e envio final/"
+docs/Arquivos para apresentação e envio final/
+docs/Arquivos\ para\ apresentação\ e\ envio\ final/
+docs/~$*
+~$*
+
