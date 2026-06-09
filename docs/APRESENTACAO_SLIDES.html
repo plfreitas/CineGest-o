@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Apresentação CineGestão - Slides</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --accent: #3b82f6;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Presentation Area */
+    .deck-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding: 20px;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1100px;
+      height: 85%;
+      background-color: var(--bg-card);
+      border-radius: 20px;
+      border: 1px solid #334155;
+      padding: 50px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5);
+      flex-direction: column;
+      justify-content: space-between;
+      position: absolute;
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      animation: fadeIn 0.5s ease forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header & Titles */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #334155;
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+    }
+    .slide-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title span {
+      color: var(--accent);
+    }
+    .slide-number {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background-color: #0f172a;
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+
+    /* Content Layouts */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      height: 100%;
+      justify-content: center;
+    }
+    .col-center {
+      align-items: center;
+      text-align: center;
+    }
+    
+    /* Elements */
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+    strong {
+      color: var(--text-main);
+    }
+    .highlight-box {
+      background-color: rgba(59, 130, 246, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 15px;
+      border-radius: 0 12px 12px 0;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-right: 8px;
+    }
+    .badge-primary { background-color: rgba(59, 130, 246, 0.2); color: var(--accent); }
+    .badge-success { background-color: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+    .badge-error { background-color: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+
+    .bullet-list {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .bullet-list li {
+      font-size: 18px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .bullet-list li::before {
+      content: "✦";
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .slide-image {
+      max-width: 100%;
+      max-height: 380px;
+      border-radius: 12px;
+      border: 1px solid #475569;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+    }
+    .diagram-box {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background-color: #0f172a;
+      border: 1px solid #334155;
+      padding: 15px;
+      border-radius: 12px;
+      white-space: pre;
+      overflow-x: auto;
+      color: #38bdf8;
+    }
+
+    /* Slide 1 Special */
+    .title-large {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(to right, #3b82f6, #60a5fa, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+    }
+    .subtitle-large {
+      font-size: 22px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+    }
+    .metadata-box {
+      background-color: rgba(255,255,255,0.02);
+      border: 1px solid #334155;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+    }
+    .metadata-box p {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .metadata-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Navigation Bar */
+    .nav-bar {
+      height: 60px;
+      background-color: #0f172a;
+      border-top: 1px solid #334155;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+    }
+    .nav-btn {
+      background-color: var(--bg-card);
+      border: 1px solid #475569;
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      background-color: var(--accent);
+      border-color: var(--accent);
+    }
+    .toggle-notes-btn {
+      background-color: #334155;
+    }
+
+    /* Presenter Notes Panel */
+    .notes-panel {
+      height: 150px;
+      background-color: #020617;
+      border-top: 2px solid var(--accent);
+      padding: 15px 40px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .notes-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+    }
+    .notes-content {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #e2e8f0;
+      font-style: italic;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .stat-card {
+      background-color: #0f172a;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+    .stat-number.green { color: var(--accent-green); }
+    .stat-number.red { color: var(--accent-red); }
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide Deck -->
+  <div class="deck-container">
+
+    <!-- SLIDE 1: Capa -->
+    <div class="slide active" id="slide-1">
+      <div class="slide-header" style="border: none; margin: 0; padding: 0;">
+        <span class="slide-number">Slide 1 de 8</span>
+      </div>
+      <div class="slide-body col-center">
+        <h1 class="title-large">CineGestão</h1>
+        <h2 class="subtitle-large">Solução Mobile para Gestão de Locadoras Independentes</h2>
+        <div class="metadata-box">
+          <p><strong>Projeto de Extensão Universitária</strong> - Etapa IV</p>
+          <p><strong>Estudante:</strong> Pedro Luis Santos Freitas (Matrícula: 202402273973)</p>
+          <p><strong>Curso:</strong> Ciência da Computação</p>
+          <p><strong>Parceiro:</strong> Freitas Vídeo Locadora (Centro, Rio de Janeiro)</p>
+        </div>
+      </div>
+      <div></div>
+    </div>
+
+    <!-- SLIDE 2: Diagnóstico -->
+    <div class="slide" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-title"><span>01.</span> O Diagnóstico Social e o Parceiro</div>
+        <span class="slide-number">Slide 2 de 8</span>
+      </div>
+      <div class="slide-body">
+        <div class="col">
+          <div class="highlight-box">
+            <h3 style="color: var(--accent); margin-bottom: 8px;">Freitas Vídeo Locadora</h3>
+            <p>Comércio tradicional há mais de 20 anos no Centro do Rio de Janeiro, atendendo públicos de perfil popular (classes C e D).</p>
+          </div>
+          <p>A escuta ativa com o proprietário, Sr. Pedro Freitas, revelou a necessidade crítica de modernização de baixo custo sem dependência de ERPs proprietários caros.</p>
+        </div>
+        <div class="col">
+          <h3 style="margin-bottom: 10px; color: var(--text-main);">Dores Identificadas no Processo Analógico:</h3>
+          <ul class="bullet-list">
+            <li><strong>Lentidão no Atendimento:</strong> Busca manual de registros em fichas de papel (média de 3min 45s).</li>
+            <li><strong>Erros de Inventário:</strong> Discrepâncias entre filmes locados e disponíveis nas prateleiras.</li>
+            <li><strong>Insegurança Financeira:</strong> Dificuldade em controlar prazos de devolução e aplicar multas.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Solução e Stack -->
+    <div class="slide" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-title"><span>02.</span> A Solução e Stack Tecnológica</div>
+        <span class="slide-number">Slide 3 de 8</span>
+      </div>
+      <div class="slide-body">
+        <div class="col">
+          <h3 style="color: var(--accent); margin-bottom: 10px;">CineGestão App</h3>
+          <p style="margin-bottom: 15px;">Aplicativo móvel desenvolvido para atuar como assistente de balcão reativo do atendente, agilizando consultas e cadastros.</p>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number">React Native</div>
+              <div class="stat-label">Interface Reativa</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" style="color: var(--accent-green);">MongoDB</div>
+              <div class="stat-label">Banco na Nuvem</div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="highlight-box" style="border-left-color: var(--accent-green); background-color: rgba(16, 185, 129, 0.05); margin-bottom: 15px;">
+            <h3 style="color: var(--accent-green); margin-bottom: 8px;">Estratégia Offline-First</h3>
+            <p>O catálogo é guardado em cache no dispositivo do atendente. Caso a internet caia, a consulta física continua disponível. Ações de locação pendentes entram em uma fila e sincronizam no momento em que a rede reestabelece.</p>
+          </div>
+          <p><strong>Segurança Implementada:</strong> Headers HTTP via Helmet, Rate Limiting contra abusos e sanitização de consultas contra NoSQL Injection.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Arquitetura e DER -->
+    <div class="slide" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-title"><span>03.</span> Diagrama de Arquitetura e DER</div>
+        <span class="slide-number">Slide 4 de 8</span>
+      </div>
+      <div class="slide-body" style="gap: 15px;">
+        <div class="col" style="flex: 1.1;">
+          <h3 style="margin-bottom: 8px; color: var(--accent);">Fluxo de Arquitetura</h3>
+          <div class="diagram-box" style="margin-bottom: 10px;">
+App Mobile (Axios) ──[HTTP/JSON]──> API Node.js (Express) 
+                                         │
+                                   [Mongoose Schema]
+                                         │
+                                         ▼
+                                  MongoDB Atlas (Nuvem)
+          </div>
+        </div>
+        <div class="col" style="flex: 1.3;">
+          <h3 style="margin-bottom: 8px; color: var(--accent-green);">Modelo Entidade-Relacionamento NoSQL</h3>
+          <div class="diagram-box" style="font-size: 10.5px; color: #a7f3d0; line-height: 1.3;">
+[MOVIE] ◄────── (Ref: movie_id) ──────┐
+ - id (ObjectId PK)                    │
+ - title / genre / synopsis / image    │   [RENTAL]
+ - rating (Number)                     │   - id (ObjectId PK)
+ - available (Boolean)                 ├── - rental_date / due_date
+                                       │   - status (Enum)
+[CLIENT] ◄───── (Ref: client_id) ─────┘
+ - id (ObjectId PK)
+ - name / phone / address
+ - cpf (String Unique)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Demonstracao 1 -->
+    <div class="slide" id="slide-5">
+      <div class="slide-header">
+        <div class="slide-title"><span>04.</span> App na Prática: Dashboard e Busca</div>
+        <span class="slide-number">Slide 5 de 8</span>
+      </div>
+      <div class="slide-body">
+        <div class="col" style="flex: 1.2;">
+          <img src="./dashboard.png" class="slide-image" alt="Dashboard Screen" onerror="this.src='https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&q=80'" />
+        </div>
+        <div class="col" style="flex: 0.8;">
+          <h3 style="color: var(--accent); margin-bottom: 10px;">Dashboard Inteligente</h3>
+          <ul class="bullet-list">
+            <li><strong>Indicadores Reativos:</strong> Total de filmes, clientes cadastrados e filmes disponíveis.</li>
+            <li><strong>Busca Debounced:</strong> Filtra o catálogo por título ou gênero fazendo chamadas otimizadas à API.</li>
+            <li><strong>Estética Premium:</strong> Modo escuro (Dark Mode) para conforto visual em ambientes internos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Demonstracao 2 -->
+    <div class="slide" id="slide-6">
+      <div class="slide-header">
+        <div class="slide-title"><span>05.</span> Cadastro e Controle de Aluguel</div>
+        <span class="slide-number">Slide 6 de 8</span>
+      </div>
+      <div class="slide-body">
+        <div class="col" style="display: flex; flex-direction: row; gap: 15px;">
+          <img src="./addmovie.png" class="slide-image" style="max-height: 350px; flex: 1;" alt="Add Movie Screen" onerror="this.src='https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=800&q=80'" />
+          <img src="./rentalflow.png" class="slide-image" style="max-height: 350px; flex: 1;" alt="Rental Flow Screen" onerror="this.src='https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&q=80'" />
+        </div>
+        <div class="col" style="flex: 0.8;">
+          <h3 style="color: var(--accent); margin-bottom: 10px;">Fluxos Operacionais</h3>
+          <ul class="bullet-list">
+            <li><strong>Adicionar Filme:</strong> Formulário integrado à API para cadastrar novos DVDs instantaneamente no banco de dados Atlas.</li>
+            <li><strong>Registrar Aluguel:</strong> Associa o filme ao CPF do cliente de forma digital e define a data de devolução.</li>
+            <li><strong>Validação de Segurança:</strong> CPF validado com 11 dígitos no client-side para evitar dados corrompidos.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Resultados -->
+    <div class="slide" id="slide-7">
+      <div class="slide-header">
+        <div class="slide-title"><span>06.</span> Resultados Sociais e Validação</div>
+        <span class="slide-number">Slide 7 de 8</span>
+      </div>
+      <div class="slide-body">
+        <div class="col">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-number green">8s</div>
+              <div class="stat-label">Tempo de busca atual</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number red" style="text-decoration: line-through;">3m 45s</div>
+              <div class="stat-label">Tempo no fichário físico antigo</div>
+            </div>
+            <div class="stat-card" style="grid-column: span 2;">
+              <div class="stat-number">93,3%</div>
+              <div class="stat-label">Dos usuários consideraram a navegação altamente intuitiva</div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <h3 style="color: var(--accent); margin-bottom: 10px;">Feedback do Proprietário</h3>
+          <p style="font-style: italic; margin-bottom: 15px;">"Ficou muito mais fácil de enxergar as letras na tela do celular durante a noite, e a atualização em tempo real do status de 'Disponível' para 'Alugado' resolveu o meu maior problema de desorganização do fichário."</p>
+          <p><strong>Impacto Real:</strong> Eliminação de perda de mídias por falta de registro e facilidade de cobrança de multas atrasadas de clientes cadastrados.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: Conclusão -->
+    <div class="slide" id="slide-8">
+      <div class="slide-header">
+        <div class="slide-title"><span>07.</span> Considerações Finais e Futuro</div>
+        <span class="slide-number">Slide 8 de 8</span>
+      </div>
+      <div class="slide-body">
+        <div class="col">
+          <h3 style="color: var(--accent); margin-bottom: 10px;">Reflexão Teórica vs. Prática</h3>
+          <p style="margin-bottom: 15px;">Conexão empírica das heurísticas de usabilidade de **Jakob Nielsen** (visibilidade do status do sistema) e de **Roger Pressman** (desenvolvimento incremental rápido) com as dores reais do cotidiano de um comércio.</p>
+          <p>O conceito de **Mobile-First** provou-se essencial no balcão da locadora física, onde o atendente opera o aplicativo em pé enquanto caminha pelas prateleiras.</p>
+        </div>
+        <div class="col">
+          <h3 style="color: var(--accent-green); margin-bottom: 10px;">Evolução do CineGestão:</h3>
+          <ul class="bullet-list">
+            <li>Criação de testes automatizados de fluxo de tela usando **Jest**.</li>
+            <li>Substituição de cache básico por um banco local estruturado **SQLite/WatermelonDB** para modo offline total.</li>
+            <li>Envio de **Push Notifications** para alertar clientes sobre devoluções atrasadas pelo celular.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Navigation Bar -->
+  <div class="nav-bar">
+    <button class="nav-btn" id="prev-btn">◀ Anterior</button>
+    <button class="nav-btn toggle-notes-btn" id="toggle-notes-btn">Notas do Apresentador (ON)</button>
+    <button class="nav-btn" id="next-btn">Próximo ▶</button>
+  </div>
+
+  <!-- Presenter Notes Panel -->
+  <div class="notes-panel" id="notes-panel">
+    <div class="notes-title">FALA DO APRESENTADOR (ROTEIRO DE GRAVAÇÃO)</div>
+    <div class="notes-content" id="notes-content">Carregando notas...</div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const toggleNotesBtn = document.getElementById('toggle-notes-btn');
+    const notesPanel = document.getElementById('notes-panel');
+    const notesContent = document.getElementById('notes-content');
+    
+    let currentSlideIndex = 0;
+    let showNotes = true;
+
+    const presenterNotes = [
+      "Olá, meu nome é Pedro Freitas, sou estudante de Ciência da Computação e vou apresentar o CineGestão: uma solução mobile desenvolvida como projeto de extensão universitária para a disciplina de Programação Para Dispositivos Móveis em Android. Nosso projeto teve como principal objetivo aplicar a engenharia de software para transformar a rotina de um negócio local tradicional.",
+      "Nossa comunidade parceira é a 'Freitas Vídeo Locadora', um comércio tradicional que atende predominantemente um público de baixa renda no Centro do Rio de Janeiro. Durante a fase de escuta ativa com o proprietário, Sr. Pedro, identificamos que a gestão era 100% manual, baseada em fichários de papel e cadernos escolares. O resultado prático disso era um tempo de espera exaustivo para os clientes, desorganização no inventário de títulos disponíveis e falta de rastreio de devoluções atrasadas, ameaçando a saúde financeira do negócio.",
+      "Para resolver essa dor de forma escalável e barata, propusemos o app CineGestão. A stack é composta por React Native no frontend mobile e uma API Node.js conectada ao banco NoSQL MongoDB Atlas na nuvem. A grande engenharia desse projeto é a arquitetura Offline-First: sabendo que conexões centrais de internet oscilam no comércio central, o aplicativo exibe o catálogo localmente usando AsyncStorage e armazena cadastros pendentes em uma fila de sincronização ativa, enviando-os ao banco remoto no momento em que a internet restabelece. Além disso, implementamos controles de segurança robustos como Helmet e Rate Limiting no servidor backend.",
+      "Este diagrama de arquitetura ilustra a comunicação cliente-servidor através de requisições HTTPS JSON via Axios. Paralelamente, exibimos o Diagrama de Entidades-Relacionamentos do banco de dados MongoDB: estruturamos coleções limpas para Filmes, Clientes e Aluguéis, onde a coleção Rental faz referências indexadas por ObjectID, garantindo a integridade operacional necessária para a auditoria dos dados de locação.",
+      "Agora, na prática: esta é a tela inicial do CineGestão operada pelo funcionário. No topo, temos os indicadores dinâmicos do acervo. A busca utiliza um recurso de 'debounce' para filtrar o acervo automaticamente na API à medida que o atendente digita, diminuindo o tráfego de rede e dando respostas instantâneas.",
+      "O fluxo operacional é extremamente simples: para cadastrar um novo DVD no sistema, o atendente utiliza o formulário de cadastro com validações de campos vazios e sanitização contra scripts XSS. Para realizar o aluguel, o app exige a inserção de um CPF válido com exatamente 11 dígitos. Ao confirmar, o sistema executa uma chamada PATCH que altera o status do filme de 'Disponível' para 'Alugado', atualizando reativamente o Dashboard.",
+      "Validamos a solução com 15 clientes regulares e o Sr. Pedro na locadora física. O resultado foi transformador: mais de 93% dos usuários avaliaram a navegação como altamente intuitiva. Mas o maior indicador de impacto social foi o tempo: o atendimento que durava quase 4 minutos folheando fichas manuais passou a durar apenas 8 segundos com o app, eliminando filas e automatizando cobranças atrasadas.",
+      "Como reflexão acadêmica, conectamos na prática os preceitos de usabilidade de Jakob Nielsen e o desenvolvimento ágil de Roger Pressman. Para o futuro da aplicação, planejamos adicionar sincronização offline local usando SQLite nativo no celular e notificações push automáticas para lembrar clientes de devoluções. Concluo agradecendo a oportunidade de usar a computação como ponte para o desenvolvimento social de comércios tradicionais. Muito obrigado."
+    ];
+
+    function updateSlide() {
+      slides.forEach((slide, index) => {
+        if (index === currentSlideIndex) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+      notesContent.textContent = presenterNotes[currentSlideIndex];
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentSlideIndex > 0) {
+        currentSlideIndex--;
+        updateSlide();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentSlideIndex < slides.length - 1) {
+        currentSlideIndex++;
+        updateSlide();
+      }
+    });
+
+    toggleNotesBtn.addEventListener('click', () => {
+      showNotes = !showNotes;
+      if (showNotes) {
+        notesPanel.style.display = 'flex';
+        toggleNotesBtn.textContent = 'Notas do Apresentador (ON)';
+      } else {
+        notesPanel.style.display = 'none';
+        toggleNotesBtn.textContent = 'Notas do Apresentador (OFF)';
+      }
+    });
+
+    // Keyboard Navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        if (currentSlideIndex < slides.length - 1) {
+          currentSlideIndex++;
+          updateSlide();
+        }
+      } else if (e.key === 'ArrowLeft') {
+        if (currentSlideIndex > 0) {
+          currentSlideIndex--;
+          updateSlide();
+        }
+      }
+    });
+
+    // Initial load
+    updateSlide();
+  </script>
+</body>
+</html>
