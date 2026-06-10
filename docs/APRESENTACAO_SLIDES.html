@@ -246,7 +246,7 @@
       border-top: 2px solid var(--accent);
       padding: 15px 40px;
       overflow-y: auto;
-      display: flex;
+      display: none;
       flex-direction: column;
       gap: 8px;
     }
@@ -497,7 +497,7 @@ App Mobile (Axios) ──[HTTP/JSON]──> API Node.js (Express)
   <!-- Navigation Bar -->
   <div class="nav-bar">
     <button class="nav-btn" id="prev-btn">◀ Anterior</button>
-    <button class="nav-btn toggle-notes-btn" id="toggle-notes-btn">Notas do Apresentador (ON)</button>
+    <button class="nav-btn toggle-notes-btn" id="toggle-notes-btn">Notas do Apresentador (OFF)</button>
     <button class="nav-btn" id="next-btn">Próximo ▶</button>
   </div>
 
@@ -516,7 +516,7 @@ App Mobile (Axios) ──[HTTP/JSON]──> API Node.js (Express)
     const notesContent = document.getElementById('notes-content');
     
     let currentSlideIndex = 0;
-    let showNotes = true;
+    let showNotes = false;
 
     const presenterNotes = [
       "Olá, meu nome é Pedro Freitas, sou estudante de Ciência da Computação e vou apresentar o CineGestão: uma solução mobile desenvolvida como projeto de extensão universitária para a disciplina de Programação Para Dispositivos Móveis em Android. Nosso projeto teve como principal objetivo aplicar a engenharia de software para transformar a rotina de um negócio local tradicional.",
