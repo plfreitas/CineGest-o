@@ -163,39 +163,8 @@
 
   <h2>1. Diagrama de Entidade-Relacionamento (DER) do Banco de Dados</h2>
   <p>Abaixo, a modelagem de dados NoSQL criada para as coleções do MongoDB Atlas:</p>
-  <div class="placeholder-box">
-    [INSERIR IMAGEM DO DIAGRAMA DE BANCO DE DADOS (DER) AQUI]<br>
-    <span style="font-size: 10pt; font-weight: normal; color: #64748b;">Dica: Você pode gerar a imagem usando a ferramenta online Mermaid (https://mermaid.live) copiando o seguinte código:</span>
-    <pre style="text-align: left; font-size: 8.5pt; font-family: monospace; background: #e2e8f0; padding: 10px; margin-top: 10px; color: #1e293b;">
-erDiagram
-    MOVIE {
-        ObjectId id PK
-        String title
-        String genre
-        String year
-        String synopsis
-        Number rating
-        String image
-        Boolean available
-    }
-    CLIENT {
-        ObjectId id PK
-        String name
-        String cpf UK
-        String phone
-        String address
-    }
-    RENTAL {
-        ObjectId id PK
-        ObjectId movie_id FK
-        ObjectId client_id FK
-        Date rental_date
-        Date due_date
-        String status
-    }
-    RENTAL ||--|| MOVIE : "loca"
-    RENTAL ||--|| CLIENT : "vincula-se a"
-    </pre>
+  <div style="text-align: center; margin-top: 15px; margin-bottom: 25px;">
+    <img src="./database.png" alt="Diagrama de Entidade-Relacionamento NoSQL" style="max-width: 550px; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);" />
   </div>
 
   <h2>2. Diagrama de Arquitetura de Software</h2>
